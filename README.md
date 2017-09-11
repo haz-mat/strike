@@ -1,5 +1,5 @@
 # strike
-Strike a simple service for hosting CoreOS Ignition configuration or Container Linux configs. It transpiles Container Linux Configs to Ignition Configs for you. For convenience it also serves static assets.
+Strike is a simple service for hosting CoreOS Ignition configuration or Container Linux configs. It transpiles Container Linux Configs to Ignition Configs for you. For convenience it also serves static assets.
 
 Set `STRIKE_SRV_DIR` to a directory containing an `ignition` and `static` directory. Put Container Linux Config YAML files (`.yaml` or `.yml`), or Ignition Config JSON (`.ignition`, `.ign`, or `.json`) files into the `ignition` directory. Other static assets can go into `static`.
 
