@@ -6,18 +6,14 @@ from flask import Flask
 from flask import abort
 from flask import request
 
-app = Flask(__name__)
-app.config.from_object(__name__)
-
 if environ['STRIKE_SRV_DIR']:
     srv_dir = environ['STRIKE_SRV_DIR']
 else:
     srv_dir = './'
 
-app.config.update(dict(
-    SRV_DIR=srv_dir
-))
-app.static_url_path = path.join(app.config['SRV_DIR'], 'static')
+app = Flask(__name__, static_folder=path.join(srv_dir, 'static'))
+app.config.from_object(__name__)
+app.config.update(dict(SRV_DIR=srv_dir))
 
 
 @app.route('/ignition/<string:cfg>', methods=['GET'])
