@@ -18,6 +18,6 @@ RUN apt-get -y update > /dev/null && \
 
 ENTRYPOINT ["/usr/local/bin/flask"]
 
-CMD ["run"]
+CMD ["run", "--host=0.0.0.0"]
 
 EXPOSE 5000
