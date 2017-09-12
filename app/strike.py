@@ -41,7 +41,7 @@ def ct_transpile(cfg):
     else:
         abort(404)
 
-    cmd = ['./bin/ct']
+    cmd = ['./bin/ct', '-strict']
     platform = request.args.get('platform')
     try:
         cmd.append('-platform=' + platform)
