@@ -4,6 +4,7 @@ OS := $(shell uname | tr '[:upper:]' '[:lower:]')
 ct_version = 0.4.2
 
 ct_filename := ct-v$(ct_version)-x86_64-unknown-$(OS)-gnu
+ct_sha256 := 9b6e2c1a1ea9e0f85f6b1e8711932c4761965a800f3381a75f960a493162502a
 
 build: | app/bin/$(ct_filename)
 	cd app; \
@@ -16,6 +17,7 @@ app/bin/$(ct_filename):
 		mkdir -p bin && \
 		cd ./bin && \
 			curl -OL 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v$(ct_version)/$(ct_filename)' && \
+			echo "$(ct_sha256)  $(ct_filename)" | sha256sum -c && \
 			chmod +x '$(ct_filename)' && \
 			ln -sf '$(ct_filename)' ct
 
