@@ -1,9 +1,9 @@
 .DEFAULT_GOAL := build
 .PHONY: run build clean docker docker-run
 OS := $(shell uname | tr '[:upper:]' '[:lower:]')
-ct_version = 0.4.2
 
-ct_filename := ct-v$(ct_version)-x86_64-unknown-$(OS)-gnu
+ct_filename = ct-v$(ct_version)-x86_64-unknown-$(OS)-gnu
+ct_version = 0.4.2
 ct_sha256 := 9b6e2c1a1ea9e0f85f6b1e8711932c4761965a800f3381a75f960a493162502a
 
 build: | app/bin/$(ct_filename)
@@ -17,7 +17,9 @@ app/bin/$(ct_filename):
 		mkdir -p bin && \
 		cd ./bin && \
 			curl -OL 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v$(ct_version)/$(ct_filename)' && \
-			echo "$(ct_sha256)  $(ct_filename)" | sha256sum -c && \
+			{ \
+				echo "$(ct_sha256)  $(ct_filename)" | sha256sum -c || rm "$(ct_filename)"; \
+			} && \
 			chmod +x '$(ct_filename)' && \
 			ln -sf '$(ct_filename)' ct
 
@@ -41,7 +43,6 @@ docker-run: docker-build
 		--net=host \
 		--name strike \
 		-v $(shell pwd)/srv:/srv/strike \
-		--env=FLASK_DEBUG=1 \
 		strike
 
 clean:
