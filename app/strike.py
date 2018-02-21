@@ -18,6 +18,10 @@ app.config.update(dict(SRV_DIR=srv_dir))
 
 @app.route('/ignition/<string:cfg>', methods=['GET'])
 def ct_transpile(cfg):
+    """
+    Accepts a path to a file name with optional
+    platform parameter. Returns Ignition config.
+    """
     if path.isfile(path.join(app.config['SRV_DIR'],
                    'ignition', cfg + '.yaml')):
         cfg_file = path.join(app.config['SRV_DIR'],
@@ -43,10 +47,8 @@ def ct_transpile(cfg):
 
     cmd = ['./bin/ct', '-strict']
     platform = request.args.get('platform')
-    try:
+    if platform is not None:
         cmd.append('-platform=' + platform)
-    except:
-        pass
 
     proc = subprocess.Popen(cmd,
                             stdout=subprocess.PIPE,

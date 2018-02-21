@@ -10,6 +10,7 @@ build: | app/bin/$(ct_filename)
 	cd app; \
 		python3 -m venv venv && \
 		. "venv/bin/activate" && \
+			pip3 install -U pip && \
 			pip3 install -Ur requirements.txt
 
 app/bin/$(ct_filename):
