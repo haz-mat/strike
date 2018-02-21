@@ -3,8 +3,8 @@
 OS := $(shell uname | tr '[:upper:]' '[:lower:]')
 
 ct_filename = ct-v$(ct_version)-x86_64-unknown-$(OS)-gnu
-ct_version = 0.4.2
-ct_sha256 := 9b6e2c1a1ea9e0f85f6b1e8711932c4761965a800f3381a75f960a493162502a
+ct_version = 0.7.0
+ct_sha256 := dca78785b487ad4fae135699ca0f48aa95ce736b0a67c2ec6bdc14ca4cbe05c4
 
 build: | app/bin/$(ct_filename)
 	cd app; \
@@ -25,7 +25,7 @@ app/bin/$(ct_filename):
 			ln -sf '$(ct_filename)' ct
 
 run: build
-	mkdir -p srv
+	mkdir -p srv/ignition srv/static
 	cd app; \
 		. "venv/bin/activate" && \
 			FLASK_DEBUG=1 FLASK_APP=strike.py STRIKE_SRV_DIR=../srv flask run
